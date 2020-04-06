@@ -1,4 +1,5 @@
 import json
+import dictionary
 
 
 # reads words dictionary into python dictionary
@@ -68,12 +69,13 @@ def split_list(l, sep):
     return tmp
 
 
-def rate_string(data, string_to_check, d=1):
+def rate_string(data, string_to_check, d=1, use_od=False):
     rate = 0
     rate_before = 0
     out = []
     # iterating over all words in provided string
-    for l in string_split(string_to_check):
+    words = string_split(string_to_check)
+    for l in words:
         found_words = {}  # dict of words that might be same as one in string
         for p in data.keys():
             if are_strings_equal(l, p, d):
@@ -92,21 +94,60 @@ def rate_string(data, string_to_check, d=1):
                 tmp_rate /= len(found_words)
                 rate += tmp_rate
         if rate == rate_before:  # if nothing has been found this word should be highlighted
-            out.append(l)
+            # first - let's check oxford dictionary
+            if use_od:  # if it's original string, not the one from OD
+                od_rate = rate_via_od(data, l)
+                rate += od_rate
+                dictionary.store_data(l, rate)
+            else:
+                out.append(l)
         else:
             rate_before = rate
+    # normalizing string's rate
+    if len(words) > 0:
+        rate /= max((len(words) - len(out)), 1)
     return rate, out
+
+
+def rate_via_od(data, word):
+    od_rate, od_data = dictionary.get_data_from_od(word)
+    if od_rate is not None:
+        return od_rate
+    word_rate = 0
+    count = 0
+    # get all definitions for word, rate them and normalize
+    if "results" in od_data:
+        for p in od_data["results"][0]["lexicalEntries"]:
+            for m in p["entries"][0]["senses"]:
+                if "definitions" in m:
+                    result_string = m["definitions"][0]
+                    rate, missing_words = rate_string(data, result_string, 0)
+                    word_rate += rate
+                    count += 1
+    if count != 0:
+        word_rate /= count
+    return word_rate
 
 
 def main():
     data = prepare_data()
     test_data = prepare_content()
-    for l in test_data:  # looking for same words only
-        rate, missing_words = rate_string(data, l, 0)
+    dictionary.init()
+    for l in test_data:
+        # looking for same words only
+        rate, missing_words = rate_string(data, l, 0, True)
         print("distance:", 0, " string:", l, " rate:", rate, " missing words:", missing_words)
-    for l in test_data:  # checking with correction
-        rate, missing_words = rate_string(data, l)
+        rate, missing_words = rate_string(data, l, 1, True)
         print("distance:", 1, " string:", l, " rate:", rate, " missing words:", missing_words)
+
+    # without oxford dictionary
+    for l in test_data:
+        # looking for same words only
+        rate, missing_words = rate_string(data, l, 0, False)
+        print("distance:", 0, " string:", l, " rate:", rate, " missing words:", missing_words)
+        rate, missing_words = rate_string(data, l, 1, False)
+        print("distance:", 1, " string:", l, " rate:", rate, " missing words:", missing_words)
+    dictionary.store_data_to_file()
 
 
 main()
