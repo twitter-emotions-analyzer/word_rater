@@ -26,6 +26,8 @@ def init():
 def get_data_from_od(word):
     # get from local dict, if already exist, otherwise use Oxford Dictionary API
     global new_rates
+    global app_id
+    global app_key
     if word in new_rates:
         return new_rates[word], None
     else:

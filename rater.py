@@ -1,12 +1,13 @@
-import json
+import threading
+
+from flask import Flask
+from flask import request
+
+import data_wrapper
 import dictionary
+import rabbit_consumer
 
-
-# reads words dictionary into python dictionary
-def prepare_data():
-    with open("en_words.json") as file:
-        data = json.load(file)
-    return data
+app = Flask("rater")
 
 
 # reads dataset into list of strings
@@ -96,7 +97,7 @@ def rate_string(data, string_to_check, d=1, use_od=False):
         if rate == rate_before:  # if nothing has been found this word should be highlighted
             # first - let's check oxford dictionary
             if use_od:  # if it's original string, not the one from OD
-                od_rate = rate_via_od(data, l)
+                od_rate = data_wrapper.get_data_from_od(l)
                 rate += od_rate
                 dictionary.store_data(l, rate)
             else:
@@ -129,25 +130,59 @@ def rate_via_od(data, word):
     return word_rate
 
 
-def main():
-    data = prepare_data()
-    test_data = prepare_content()
+# def main():
+#     data = prepare_data()
+#     test_data = prepare_content()
+#     dictionary.init()
+#     for l in test_data:
+#         # looking for same words only
+#         rate, missing_words = rate_string(data, l, 0, True)
+#         print("distance:", 0, " string:", l, " rate:", rate, " missing words:", missing_words)
+#         rate, missing_words = rate_string(data, l, 1, True)
+#         print("distance:", 1, " string:", l, " rate:", rate, " missing words:", missing_words)
+#
+#     # without oxford dictionary
+#     for l in test_data:
+#         # looking for same words only
+#         rate, missing_words = rate_string(data, l, 0, False)
+#         print("distance:", 0, " string:", l, " rate:", rate, " missing words:", missing_words)
+#         rate, missing_words = rate_string(data, l, 1, False)
+#         print("distance:", 1, " string:", l, " rate:", rate, " missing words:", missing_words)
+#     dictionary.store_data_to_file()
+
+
+def parse_str_to_bool(string):
+    return string is not None and string.lower() in ("yes", "true", 1)
+
+
+@app.route("/rabbit")
+def start_rabbit():
+    rabbit_thread = threading.Thread(target=rabbit_consumer.init(), daemon=True)
+    rabbit_thread.start()
+    return "rabbit started"
+
+
+@app.route("/rate/")
+def rate_web_request():
+    string = request.args.get("string")
+    od = request.args.get("od")
+    rate, missing_words = rate_string(data_wrapper.get_data(), string, 0, parse_str_to_bool(od))
+    return "rate is:" + str(rate) + ". missing words are:" + str(missing_words)
+
+
+@app.route("/self_made_data")
+def get_self_made_data():
+    return data_wrapper.get_self_made_data()
+
+
+
+@app.route("/self_made_data/store", methods=['POST'])
+def store_self_made_data():
+    data_wrapper.store_self_made_data(request.json)
+    return ""
+
+
+if __name__ == "__main__":
     dictionary.init()
-    for l in test_data:
-        # looking for same words only
-        rate, missing_words = rate_string(data, l, 0, True)
-        print("distance:", 0, " string:", l, " rate:", rate, " missing words:", missing_words)
-        rate, missing_words = rate_string(data, l, 1, True)
-        print("distance:", 1, " string:", l, " rate:", rate, " missing words:", missing_words)
-
-    # without oxford dictionary
-    for l in test_data:
-        # looking for same words only
-        rate, missing_words = rate_string(data, l, 0, False)
-        print("distance:", 0, " string:", l, " rate:", rate, " missing words:", missing_words)
-        rate, missing_words = rate_string(data, l, 1, False)
-        print("distance:", 1, " string:", l, " rate:", rate, " missing words:", missing_words)
-    dictionary.store_data_to_file()
-
-
-main()
+    data_wrapper.get_data()
+    app.run()
