@@ -1,5 +1,5 @@
 import json
-
+import psql_wrapper
 import rater
 
 rate_data = {}
@@ -44,3 +44,11 @@ def get_data_from_od(word):
     rate = rater.rate_via_od(get_data(), word)
     self_made_data.update({word: rate})
     return rate
+
+
+def get_user_tweets(user_id):
+    return psql_wrapper.get_user_tweets(user_id)
+
+
+def save(tweet):
+    tweet.save()

@@ -18534,5 +18534,9 @@
   "denigrating": -1.0,
   "defamatory": -1.0,
   "calumnious": -1.0,
-  "calumniatory": -1.0
+  "calumniatory": -1.0,
+  "God": 0.7,
+  "i": 0.000001,
+  "rofl": 1,
+  "to": 0.000001
 }
