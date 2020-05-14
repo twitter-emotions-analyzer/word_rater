@@ -1,0 +1,193 @@
+{
+	"info": {
+		"_postman_id": "94a0f756-8d8c-4b67-b541-b4cf39fdb415",
+		"name": "word_rater",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "rate string",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Trusted application=\"Web Self-Service\", username=\"9152876920613071183\"",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"customerAccount\": {\r\n        \"contacts\": [{\r\n            \"birthday\": 471643200000,\r\n            \"contactMethods\": [{\r\n                \"@type\": \"PhoneNumber\",\r\n                \"contactMethodType\": {\r\n                    \"id\": \"9135207080013612948\",\r\n                    \"name\": \"Mobile\"\r\n                },\r\n                \"value\": \"00000000000\"\r\n            }, {\r\n                \"@type\": \"Email\",\r\n                \"contactMethodType\": {\r\n                    \"id\": \"9135207080013612936\",\r\n                    \"name\": \"Private\"\r\n                },\r\n                \"value\": \"boogeyman@mvno.com\"\r\n            }],\r\n            \"firstName\": \"John\",\r\n            \"gender\": \"Male\",\r\n            \"lastName\": \"cteated\",\r\n            \"status\": \"Active\",\r\n            \"language\": \"9140398094013272294\",\r\n            \"firstNameKana\": \"Wick\",\r\n            \"lastNameKana\": \"Boogeyman\"\r\n        }],\r\n        \"status\": \"Active\",\r\n        \"zipCode\": \"3333333\",\r\n        \"prefectureId\": \"9153645316113107831\",\r\n        \"city\": \"Chiyoda-ku\",\r\n        \"townArea\": \"Marunouchi\",\r\n        \"lowLevelAddress\": \"7 Chome-7\",\r\n        \"customerCategory\": {\r\n            \"id\": \"9145846203913115265\",\r\n            \"name\": \"Residential\"\r\n        },\r\n        \"easyId\": \"564740890058\"\r\n    },\r\n    \"billingAccount\": {\r\n        \"paymentType\": {\r\n            \"listValueId\": \"9155468810713805865\"\r\n        }\r\n    },\r\n    \"paymentCard\": {\r\n        \"customerId\": \"9156803432213570380\",\r\n        \"brandCode\": \"Visa\",\r\n        \"last4Digits\": \"0532\",\r\n        \"expirationYear\": \"2023\",\r\n        \"expirationMonth\": \"05\",\r\n        \"cardToken\": \"19070811001rdF6Hl7YvDP8mFQf20532\",\r\n        \"signature\": \"78badfff604c6fd41e11da406c2b02e756bcaebbea5862f28ff694eb35448b3e\",\r\n        \"keyVersion\": \"1\",\r\n        \"bankIdentificationNumber\": \"415108\"\r\n    },\r\n    \"salesOrder\": {\r\n        \"discountItems\": [],\r\n        \"price\": {\r\n            \"totalPointAmount\": {\r\n                \"currency\": {\r\n                    \"name\": \"Yen\",\r\n                    \"id\": \"9146567903365593622\",\r\n                    \"currencyCode\": \"JPY\"\r\n                },\r\n                \"value\": \"0\"\r\n            },\r\n            \"recurrentTax\": {\r\n                \"currency\": {\r\n                    \"name\": \"Yen\",\r\n                    \"id\": \"9146567903365593622\",\r\n                    \"currencyCode\": \"JPY\"\r\n                },\r\n                \"value\": \"0.0\"\r\n            },\r\n            \"oneTimeNextBillTax\": {\r\n                \"currency\": {\r\n                    \"name\": \"Yen\",\r\n                    \"id\": \"9146567903365593622\",\r\n                    \"currencyCode\": \"JPY\"\r\n                },\r\n                \"value\": \"300.0\"\r\n            },\r\n            \"recurrentDiscount\": {\r\n                \"currency\": {\r\n                    \"name\": \"Yen\",\r\n                    \"id\": \"9146567903365593622\",\r\n                    \"currencyCode\": \"JPY\"\r\n                },\r\n                \"value\": \"3278.0\"\r\n            },\r\n            \"oneTimeDiscount\": {\r\n                \"currency\": {\r\n                    \"name\": \"Yen\",\r\n                    \"id\": \"9146567903365593622\",\r\n                    \"currencyCode\": \"JPY\"\r\n                },\r\n                \"value\": \"0.0\"\r\n            },\r\n            \"recurrentPriceWithDiscount\": {\r\n                \"currency\": {\r\n                    \"name\": \"Yen\",\r\n                    \"id\": \"9146567903365593622\",\r\n                    \"currencyCode\": \"JPY\"\r\n                },\r\n                \"value\": \"0.0\"\r\n            },\r\n            \"recurrentTotal\": {\r\n                \"currency\": {\r\n                    \"name\": \"Yen\",\r\n                    \"id\": \"9146567903365593622\",\r\n                    \"currencyCode\": \"JPY\"\r\n                },\r\n                \"value\": \"0.0\"\r\n            },\r\n            \"oneTimePayNowTax\": {\r\n                \"currency\": {\r\n                    \"name\": \"Yen\",\r\n                    \"id\": \"9146567903365593622\",\r\n                    \"currencyCode\": \"JPY\"\r\n                },\r\n                \"value\": \"0\"\r\n            },\r\n            \"recurrent\": {\r\n                \"currency\": {\r\n                    \"name\": \"Yen\",\r\n                    \"id\": \"9146567903365593622\",\r\n                    \"currencyCode\": \"JPY\"\r\n                },\r\n                \"value\": \"2980.0\"\r\n            },\r\n            \"oneTimePayNowBankInstallment\": {\r\n                \"currency\": {\r\n                    \"name\": \"Yen\",\r\n                    \"id\": \"9146567903365593622\",\r\n                    \"currencyCode\": \"JPY\"\r\n                },\r\n                \"value\": \"0\"\r\n            },\r\n            \"oneTimeNextBillTotalPriceWithDiscount\": {\r\n                \"currency\": {\r\n                    \"name\": \"Yen\",\r\n                    \"id\": \"9146567903365593622\",\r\n                    \"currencyCode\": \"JPY\"\r\n                },\r\n                \"value\": \"3000.0\"\r\n            },\r\n            \"oneTimePayNowTotalPriceWithDiscount\": {\r\n                \"currency\": {\r\n                    \"name\": \"Yen\",\r\n                    \"id\": \"9146567903365593622\",\r\n                    \"currencyCode\": \"JPY\"\r\n                },\r\n                \"value\": \"0\"\r\n            },\r\n            \"oneTimeTax\": {\r\n                \"currency\": {\r\n                    \"name\": \"Yen\",\r\n                    \"id\": \"9146567903365593622\",\r\n                    \"currencyCode\": \"JPY\"\r\n                },\r\n                \"value\": \"300.0\"\r\n            },\r\n            \"oneTimeBasicTotalDiscount\": {\r\n                \"currency\": {\r\n                    \"name\": \"Yen\",\r\n                    \"id\": \"9146567903365593622\",\r\n                    \"currencyCode\": \"JPY\"\r\n                },\r\n                \"value\": \"0.0\"\r\n            },\r\n            \"oneTimeNextBillTotalPrice\": {\r\n                \"currency\": {\r\n                    \"name\": \"Yen\",\r\n                    \"id\": \"9146567903365593622\",\r\n                    \"currencyCode\": \"JPY\"\r\n                },\r\n                \"value\": \"3300.0\"\r\n            },\r\n            \"recurrentBasicTotalDiscount\": {\r\n                \"currency\": {\r\n                    \"name\": \"Yen\",\r\n                    \"id\": \"9146567903365593622\",\r\n                    \"currencyCode\": \"JPY\"\r\n                },\r\n                \"value\": \"2980.0\"\r\n            },\r\n            \"oneTimePayNowTotalPrice\": {\r\n                \"currency\": {\r\n                    \"name\": \"Yen\",\r\n                    \"id\": \"9146567903365593622\",\r\n                    \"currencyCode\": \"JPY\"\r\n                },\r\n                \"value\": \"0\"\r\n            },\r\n            \"oneTime\": {\r\n                \"currency\": {\r\n                    \"name\": \"Yen\",\r\n                    \"id\": \"9146567903365593622\",\r\n                    \"currencyCode\": \"JPY\"\r\n                },\r\n                \"value\": \"3000.0\"\r\n            },\r\n            \"oneTimePriceWithDiscount\": {\r\n                \"currency\": {\r\n                    \"name\": \"Yen\",\r\n                    \"id\": \"9146567903365593622\",\r\n                    \"currencyCode\": \"JPY\"\r\n                },\r\n                \"value\": \"3000.0\"\r\n            },\r\n            \"oneTimeTotal\": {\r\n                \"currency\": {\r\n                    \"name\": \"Yen\",\r\n                    \"id\": \"9146567903365593622\",\r\n                    \"currencyCode\": \"JPY\"\r\n                },\r\n                \"value\": \"3300.0\"\r\n            }\r\n        },\r\n        \"customerId\": 9156757199813592800,\r\n        \"id\": 48910,\r\n\r\n        \"offerings\": [{\r\n                \"id\": \"2200901\",\r\n                \"offerings\": [{\r\n                        \"id\": \"220090\",\r\n                        \"offerings\": [{\r\n                            \"id\": \"1000110\",\r\n                            \"chars\": {\r\n                                \"Language ID\": \"9123457659876759894\",\r\n                                \"Answering Time\": 15\r\n                            }\r\n                        }],\r\n                        \"chars\": {}\r\n                    },\r\n\r\n                    {\r\n                        \"id\": \"220091\",\r\n                        \"chars\": {\r\n                            \"Phone Number\": \"9134419616913445555\"\r\n                        }\r\n                    },\r\n                    {\r\n                        \"id\": \"220094\",\r\n                        \"chars\": {\r\n                            \"ICCID\": \"9134419616913233443\"\r\n                        }\r\n                    }\r\n                ]\r\n            },\r\n            {\r\n                \"id\": \"2200901\",\r\n                \"chars\": {\r\n                    \"Person Name (Kana)\": \"vaay8080 vaay8080\",\r\n                    \"Person Name\": \"vaay8080\",\r\n                    \"Delivery Time Frame\": \"Optional\",\r\n                    \"Person Phone Number\": \"07012345678\",\r\n                    \"Person Address\": \"vaay8080, vaay8080, vaay8080, vaay8080, 1234567, Japan\",\r\n                    \"Person ZIP\": \"1234567\",\r\n                    \"Delivery Required\": \"Yes\",\r\n                    \"Delivery Date\": \"2019-02-13T00:00:00Z\"\r\n                }\r\n            }\r\n        ]\r\n\r\n    }\r\n}"
+				},
+				"url": {
+					"raw": "localhost:5000/rate/?string=i love to win&od=False",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"rate",
+						""
+					],
+					"query": [
+						{
+							"key": "string",
+							"value": "i love to win"
+						},
+						{
+							"key": "od",
+							"value": "False"
+						},
+						{
+							"key": "status",
+							"value": "success",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "start rabbit consumer",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Trusted application=\"Web Self-Service\", username=\"9152876920613071183\"",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"customerAccount\": {\r\n        \"contacts\": [{\r\n            \"birthday\": 471643200000,\r\n            \"contactMethods\": [{\r\n                \"@type\": \"PhoneNumber\",\r\n                \"contactMethodType\": {\r\n                    \"id\": \"9135207080013612948\",\r\n                    \"name\": \"Mobile\"\r\n                },\r\n                \"value\": \"00000000000\"\r\n            }, {\r\n                \"@type\": \"Email\",\r\n                \"contactMethodType\": {\r\n                    \"id\": \"9135207080013612936\",\r\n                    \"name\": \"Private\"\r\n                },\r\n                \"value\": \"boogeyman@mvno.com\"\r\n            }],\r\n            \"firstName\": \"John\",\r\n            \"gender\": \"Male\",\r\n            \"lastName\": \"cteated\",\r\n            \"status\": \"Active\",\r\n            \"language\": \"9140398094013272294\",\r\n            \"firstNameKana\": \"Wick\",\r\n            \"lastNameKana\": \"Boogeyman\"\r\n        }],\r\n        \"status\": \"Active\",\r\n        \"zipCode\": \"3333333\",\r\n        \"prefectureId\": \"9153645316113107831\",\r\n        \"city\": \"Chiyoda-ku\",\r\n        \"townArea\": \"Marunouchi\",\r\n        \"lowLevelAddress\": \"7 Chome-7\",\r\n        \"customerCategory\": {\r\n            \"id\": \"9145846203913115265\",\r\n            \"name\": \"Residential\"\r\n        },\r\n        \"easyId\": \"564740890058\"\r\n    },\r\n    \"billingAccount\": {\r\n        \"paymentType\": {\r\n            \"listValueId\": \"9155468810713805865\"\r\n        }\r\n    },\r\n    \"paymentCard\": {\r\n        \"customerId\": \"9156803432213570380\",\r\n        \"brandCode\": \"Visa\",\r\n        \"last4Digits\": \"0532\",\r\n        \"expirationYear\": \"2023\",\r\n        \"expirationMonth\": \"05\",\r\n        \"cardToken\": \"19070811001rdF6Hl7YvDP8mFQf20532\",\r\n        \"signature\": \"78badfff604c6fd41e11da406c2b02e756bcaebbea5862f28ff694eb35448b3e\",\r\n        \"keyVersion\": \"1\",\r\n        \"bankIdentificationNumber\": \"415108\"\r\n    },\r\n    \"salesOrder\": {\r\n        \"discountItems\": [],\r\n        \"price\": {\r\n            \"totalPointAmount\": {\r\n                \"currency\": {\r\n                    \"name\": \"Yen\",\r\n                    \"id\": \"9146567903365593622\",\r\n                    \"currencyCode\": \"JPY\"\r\n                },\r\n                \"value\": \"0\"\r\n            },\r\n            \"recurrentTax\": {\r\n                \"currency\": {\r\n                    \"name\": \"Yen\",\r\n                    \"id\": \"9146567903365593622\",\r\n                    \"currencyCode\": \"JPY\"\r\n                },\r\n                \"value\": \"0.0\"\r\n            },\r\n            \"oneTimeNextBillTax\": {\r\n                \"currency\": {\r\n                    \"name\": \"Yen\",\r\n                    \"id\": \"9146567903365593622\",\r\n                    \"currencyCode\": \"JPY\"\r\n                },\r\n                \"value\": \"300.0\"\r\n            },\r\n            \"recurrentDiscount\": {\r\n                \"currency\": {\r\n                    \"name\": \"Yen\",\r\n                    \"id\": \"9146567903365593622\",\r\n                    \"currencyCode\": \"JPY\"\r\n                },\r\n                \"value\": \"3278.0\"\r\n            },\r\n            \"oneTimeDiscount\": {\r\n                \"currency\": {\r\n                    \"name\": \"Yen\",\r\n                    \"id\": \"9146567903365593622\",\r\n                    \"currencyCode\": \"JPY\"\r\n                },\r\n                \"value\": \"0.0\"\r\n            },\r\n            \"recurrentPriceWithDiscount\": {\r\n                \"currency\": {\r\n                    \"name\": \"Yen\",\r\n                    \"id\": \"9146567903365593622\",\r\n                    \"currencyCode\": \"JPY\"\r\n                },\r\n                \"value\": \"0.0\"\r\n            },\r\n            \"recurrentTotal\": {\r\n                \"currency\": {\r\n                    \"name\": \"Yen\",\r\n                    \"id\": \"9146567903365593622\",\r\n                    \"currencyCode\": \"JPY\"\r\n                },\r\n                \"value\": \"0.0\"\r\n            },\r\n            \"oneTimePayNowTax\": {\r\n                \"currency\": {\r\n                    \"name\": \"Yen\",\r\n                    \"id\": \"9146567903365593622\",\r\n                    \"currencyCode\": \"JPY\"\r\n                },\r\n                \"value\": \"0\"\r\n            },\r\n            \"recurrent\": {\r\n                \"currency\": {\r\n                    \"name\": \"Yen\",\r\n                    \"id\": \"9146567903365593622\",\r\n                    \"currencyCode\": \"JPY\"\r\n                },\r\n                \"value\": \"2980.0\"\r\n            },\r\n            \"oneTimePayNowBankInstallment\": {\r\n                \"currency\": {\r\n                    \"name\": \"Yen\",\r\n                    \"id\": \"9146567903365593622\",\r\n                    \"currencyCode\": \"JPY\"\r\n                },\r\n                \"value\": \"0\"\r\n            },\r\n            \"oneTimeNextBillTotalPriceWithDiscount\": {\r\n                \"currency\": {\r\n                    \"name\": \"Yen\",\r\n                    \"id\": \"9146567903365593622\",\r\n                    \"currencyCode\": \"JPY\"\r\n                },\r\n                \"value\": \"3000.0\"\r\n            },\r\n            \"oneTimePayNowTotalPriceWithDiscount\": {\r\n                \"currency\": {\r\n                    \"name\": \"Yen\",\r\n                    \"id\": \"9146567903365593622\",\r\n                    \"currencyCode\": \"JPY\"\r\n                },\r\n                \"value\": \"0\"\r\n            },\r\n            \"oneTimeTax\": {\r\n                \"currency\": {\r\n                    \"name\": \"Yen\",\r\n                    \"id\": \"9146567903365593622\",\r\n                    \"currencyCode\": \"JPY\"\r\n                },\r\n                \"value\": \"300.0\"\r\n            },\r\n            \"oneTimeBasicTotalDiscount\": {\r\n                \"currency\": {\r\n                    \"name\": \"Yen\",\r\n                    \"id\": \"9146567903365593622\",\r\n                    \"currencyCode\": \"JPY\"\r\n                },\r\n                \"value\": \"0.0\"\r\n            },\r\n            \"oneTimeNextBillTotalPrice\": {\r\n                \"currency\": {\r\n                    \"name\": \"Yen\",\r\n                    \"id\": \"9146567903365593622\",\r\n                    \"currencyCode\": \"JPY\"\r\n                },\r\n                \"value\": \"3300.0\"\r\n            },\r\n            \"recurrentBasicTotalDiscount\": {\r\n                \"currency\": {\r\n                    \"name\": \"Yen\",\r\n                    \"id\": \"9146567903365593622\",\r\n                    \"currencyCode\": \"JPY\"\r\n                },\r\n                \"value\": \"2980.0\"\r\n            },\r\n            \"oneTimePayNowTotalPrice\": {\r\n                \"currency\": {\r\n                    \"name\": \"Yen\",\r\n                    \"id\": \"9146567903365593622\",\r\n                    \"currencyCode\": \"JPY\"\r\n                },\r\n                \"value\": \"0\"\r\n            },\r\n            \"oneTime\": {\r\n                \"currency\": {\r\n                    \"name\": \"Yen\",\r\n                    \"id\": \"9146567903365593622\",\r\n                    \"currencyCode\": \"JPY\"\r\n                },\r\n                \"value\": \"3000.0\"\r\n            },\r\n            \"oneTimePriceWithDiscount\": {\r\n                \"currency\": {\r\n                    \"name\": \"Yen\",\r\n                    \"id\": \"9146567903365593622\",\r\n                    \"currencyCode\": \"JPY\"\r\n                },\r\n                \"value\": \"3000.0\"\r\n            },\r\n            \"oneTimeTotal\": {\r\n                \"currency\": {\r\n                    \"name\": \"Yen\",\r\n                    \"id\": \"9146567903365593622\",\r\n                    \"currencyCode\": \"JPY\"\r\n                },\r\n                \"value\": \"3300.0\"\r\n            }\r\n        },\r\n        \"customerId\": 9156757199813592800,\r\n        \"id\": 48910,\r\n\r\n        \"offerings\": [{\r\n                \"id\": \"2200901\",\r\n                \"offerings\": [{\r\n                        \"id\": \"220090\",\r\n                        \"offerings\": [{\r\n                            \"id\": \"1000110\",\r\n                            \"chars\": {\r\n                                \"Language ID\": \"9123457659876759894\",\r\n                                \"Answering Time\": 15\r\n                            }\r\n                        }],\r\n                        \"chars\": {}\r\n                    },\r\n\r\n                    {\r\n                        \"id\": \"220091\",\r\n                        \"chars\": {\r\n                            \"Phone Number\": \"9134419616913445555\"\r\n                        }\r\n                    },\r\n                    {\r\n                        \"id\": \"220094\",\r\n                        \"chars\": {\r\n                            \"ICCID\": \"9134419616913233443\"\r\n                        }\r\n                    }\r\n                ]\r\n            },\r\n            {\r\n                \"id\": \"2200901\",\r\n                \"chars\": {\r\n                    \"Person Name (Kana)\": \"vaay8080 vaay8080\",\r\n                    \"Person Name\": \"vaay8080\",\r\n                    \"Delivery Time Frame\": \"Optional\",\r\n                    \"Person Phone Number\": \"07012345678\",\r\n                    \"Person Address\": \"vaay8080, vaay8080, vaay8080, vaay8080, 1234567, Japan\",\r\n                    \"Person ZIP\": \"1234567\",\r\n                    \"Delivery Required\": \"Yes\",\r\n                    \"Delivery Date\": \"2019-02-13T00:00:00Z\"\r\n                }\r\n            }\r\n        ]\r\n\r\n    }\r\n}"
+				},
+				"url": {
+					"raw": "localhost:5000/rabbit",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"rabbit"
+					],
+					"query": [
+						{
+							"key": "status",
+							"value": "success",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get data collected via OD",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Trusted application=\"Web Self-Service\", username=\"9152876920613071183\"",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"customerAccount\": {\r\n        \"contacts\": [{\r\n            \"birthday\": 471643200000,\r\n            \"contactMethods\": [{\r\n                \"@type\": \"PhoneNumber\",\r\n                \"contactMethodType\": {\r\n                    \"id\": \"9135207080013612948\",\r\n                    \"name\": \"Mobile\"\r\n                },\r\n                \"value\": \"00000000000\"\r\n            }, {\r\n                \"@type\": \"Email\",\r\n                \"contactMethodType\": {\r\n                    \"id\": \"9135207080013612936\",\r\n                    \"name\": \"Private\"\r\n                },\r\n                \"value\": \"boogeyman@mvno.com\"\r\n            }],\r\n            \"firstName\": \"John\",\r\n            \"gender\": \"Male\",\r\n            \"lastName\": \"cteated\",\r\n            \"status\": \"Active\",\r\n            \"language\": \"9140398094013272294\",\r\n            \"firstNameKana\": \"Wick\",\r\n            \"lastNameKana\": \"Boogeyman\"\r\n        }],\r\n        \"status\": \"Active\",\r\n        \"zipCode\": \"3333333\",\r\n        \"prefectureId\": \"9153645316113107831\",\r\n        \"city\": \"Chiyoda-ku\",\r\n        \"townArea\": \"Marunouchi\",\r\n        \"lowLevelAddress\": \"7 Chome-7\",\r\n        \"customerCategory\": {\r\n            \"id\": \"9145846203913115265\",\r\n            \"name\": \"Residential\"\r\n        },\r\n        \"easyId\": \"564740890058\"\r\n    },\r\n    \"billingAccount\": {\r\n        \"paymentType\": {\r\n            \"listValueId\": \"9155468810713805865\"\r\n        }\r\n    },\r\n    \"paymentCard\": {\r\n        \"customerId\": \"9156803432213570380\",\r\n        \"brandCode\": \"Visa\",\r\n        \"last4Digits\": \"0532\",\r\n        \"expirationYear\": \"2023\",\r\n        \"expirationMonth\": \"05\",\r\n        \"cardToken\": \"19070811001rdF6Hl7YvDP8mFQf20532\",\r\n        \"signature\": \"78badfff604c6fd41e11da406c2b02e756bcaebbea5862f28ff694eb35448b3e\",\r\n        \"keyVersion\": \"1\",\r\n        \"bankIdentificationNumber\": \"415108\"\r\n    },\r\n    \"salesOrder\": {\r\n        \"discountItems\": [],\r\n        \"price\": {\r\n            \"totalPointAmount\": {\r\n                \"currency\": {\r\n                    \"name\": \"Yen\",\r\n                    \"id\": \"9146567903365593622\",\r\n                    \"currencyCode\": \"JPY\"\r\n                },\r\n                \"value\": \"0\"\r\n            },\r\n            \"recurrentTax\": {\r\n                \"currency\": {\r\n                    \"name\": \"Yen\",\r\n                    \"id\": \"9146567903365593622\",\r\n                    \"currencyCode\": \"JPY\"\r\n                },\r\n                \"value\": \"0.0\"\r\n            },\r\n            \"oneTimeNextBillTax\": {\r\n                \"currency\": {\r\n                    \"name\": \"Yen\",\r\n                    \"id\": \"9146567903365593622\",\r\n                    \"currencyCode\": \"JPY\"\r\n                },\r\n                \"value\": \"300.0\"\r\n            },\r\n            \"recurrentDiscount\": {\r\n                \"currency\": {\r\n                    \"name\": \"Yen\",\r\n                    \"id\": \"9146567903365593622\",\r\n                    \"currencyCode\": \"JPY\"\r\n                },\r\n                \"value\": \"3278.0\"\r\n            },\r\n            \"oneTimeDiscount\": {\r\n                \"currency\": {\r\n                    \"name\": \"Yen\",\r\n                    \"id\": \"9146567903365593622\",\r\n                    \"currencyCode\": \"JPY\"\r\n                },\r\n                \"value\": \"0.0\"\r\n            },\r\n            \"recurrentPriceWithDiscount\": {\r\n                \"currency\": {\r\n                    \"name\": \"Yen\",\r\n                    \"id\": \"9146567903365593622\",\r\n                    \"currencyCode\": \"JPY\"\r\n                },\r\n                \"value\": \"0.0\"\r\n            },\r\n            \"recurrentTotal\": {\r\n                \"currency\": {\r\n                    \"name\": \"Yen\",\r\n                    \"id\": \"9146567903365593622\",\r\n                    \"currencyCode\": \"JPY\"\r\n                },\r\n                \"value\": \"0.0\"\r\n            },\r\n            \"oneTimePayNowTax\": {\r\n                \"currency\": {\r\n                    \"name\": \"Yen\",\r\n                    \"id\": \"9146567903365593622\",\r\n                    \"currencyCode\": \"JPY\"\r\n                },\r\n                \"value\": \"0\"\r\n            },\r\n            \"recurrent\": {\r\n                \"currency\": {\r\n                    \"name\": \"Yen\",\r\n                    \"id\": \"9146567903365593622\",\r\n                    \"currencyCode\": \"JPY\"\r\n                },\r\n                \"value\": \"2980.0\"\r\n            },\r\n            \"oneTimePayNowBankInstallment\": {\r\n                \"currency\": {\r\n                    \"name\": \"Yen\",\r\n                    \"id\": \"9146567903365593622\",\r\n                    \"currencyCode\": \"JPY\"\r\n                },\r\n                \"value\": \"0\"\r\n            },\r\n            \"oneTimeNextBillTotalPriceWithDiscount\": {\r\n                \"currency\": {\r\n                    \"name\": \"Yen\",\r\n                    \"id\": \"9146567903365593622\",\r\n                    \"currencyCode\": \"JPY\"\r\n                },\r\n                \"value\": \"3000.0\"\r\n            },\r\n            \"oneTimePayNowTotalPriceWithDiscount\": {\r\n                \"currency\": {\r\n                    \"name\": \"Yen\",\r\n                    \"id\": \"9146567903365593622\",\r\n                    \"currencyCode\": \"JPY\"\r\n                },\r\n                \"value\": \"0\"\r\n            },\r\n            \"oneTimeTax\": {\r\n                \"currency\": {\r\n                    \"name\": \"Yen\",\r\n                    \"id\": \"9146567903365593622\",\r\n                    \"currencyCode\": \"JPY\"\r\n                },\r\n                \"value\": \"300.0\"\r\n            },\r\n            \"oneTimeBasicTotalDiscount\": {\r\n                \"currency\": {\r\n                    \"name\": \"Yen\",\r\n                    \"id\": \"9146567903365593622\",\r\n                    \"currencyCode\": \"JPY\"\r\n                },\r\n                \"value\": \"0.0\"\r\n            },\r\n            \"oneTimeNextBillTotalPrice\": {\r\n                \"currency\": {\r\n                    \"name\": \"Yen\",\r\n                    \"id\": \"9146567903365593622\",\r\n                    \"currencyCode\": \"JPY\"\r\n                },\r\n                \"value\": \"3300.0\"\r\n            },\r\n            \"recurrentBasicTotalDiscount\": {\r\n                \"currency\": {\r\n                    \"name\": \"Yen\",\r\n                    \"id\": \"9146567903365593622\",\r\n                    \"currencyCode\": \"JPY\"\r\n                },\r\n                \"value\": \"2980.0\"\r\n            },\r\n            \"oneTimePayNowTotalPrice\": {\r\n                \"currency\": {\r\n                    \"name\": \"Yen\",\r\n                    \"id\": \"9146567903365593622\",\r\n                    \"currencyCode\": \"JPY\"\r\n                },\r\n                \"value\": \"0\"\r\n            },\r\n            \"oneTime\": {\r\n                \"currency\": {\r\n                    \"name\": \"Yen\",\r\n                    \"id\": \"9146567903365593622\",\r\n                    \"currencyCode\": \"JPY\"\r\n                },\r\n                \"value\": \"3000.0\"\r\n            },\r\n            \"oneTimePriceWithDiscount\": {\r\n                \"currency\": {\r\n                    \"name\": \"Yen\",\r\n                    \"id\": \"9146567903365593622\",\r\n                    \"currencyCode\": \"JPY\"\r\n                },\r\n                \"value\": \"3000.0\"\r\n            },\r\n            \"oneTimeTotal\": {\r\n                \"currency\": {\r\n                    \"name\": \"Yen\",\r\n                    \"id\": \"9146567903365593622\",\r\n                    \"currencyCode\": \"JPY\"\r\n                },\r\n                \"value\": \"3300.0\"\r\n            }\r\n        },\r\n        \"customerId\": 9156757199813592800,\r\n        \"id\": 48910,\r\n\r\n        \"offerings\": [{\r\n                \"id\": \"2200901\",\r\n                \"offerings\": [{\r\n                        \"id\": \"220090\",\r\n                        \"offerings\": [{\r\n                            \"id\": \"1000110\",\r\n                            \"chars\": {\r\n                                \"Language ID\": \"9123457659876759894\",\r\n                                \"Answering Time\": 15\r\n                            }\r\n                        }],\r\n                        \"chars\": {}\r\n                    },\r\n\r\n                    {\r\n                        \"id\": \"220091\",\r\n                        \"chars\": {\r\n                            \"Phone Number\": \"9134419616913445555\"\r\n                        }\r\n                    },\r\n                    {\r\n                        \"id\": \"220094\",\r\n                        \"chars\": {\r\n                            \"ICCID\": \"9134419616913233443\"\r\n                        }\r\n                    }\r\n                ]\r\n            },\r\n            {\r\n                \"id\": \"2200901\",\r\n                \"chars\": {\r\n                    \"Person Name (Kana)\": \"vaay8080 vaay8080\",\r\n                    \"Person Name\": \"vaay8080\",\r\n                    \"Delivery Time Frame\": \"Optional\",\r\n                    \"Person Phone Number\": \"07012345678\",\r\n                    \"Person Address\": \"vaay8080, vaay8080, vaay8080, vaay8080, 1234567, Japan\",\r\n                    \"Person ZIP\": \"1234567\",\r\n                    \"Delivery Required\": \"Yes\",\r\n                    \"Delivery Date\": \"2019-02-13T00:00:00Z\"\r\n                }\r\n            }\r\n        ]\r\n\r\n    }\r\n}"
+				},
+				"url": {
+					"raw": "localhost:5000/self_made_data",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"self_made_data"
+					],
+					"query": [
+						{
+							"key": "status",
+							"value": "success",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "save self made (OD) data",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Trusted application=\"Web Self-Service\", username=\"9152876920613071183\"",
+						"type": "text"
+					},
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"is\": 0\r\n}"
+				},
+				"url": {
+					"raw": "localhost:5000/self_made_data/store",
+					"host": [
+						"localhost"
+					],
+					"port": "5000",
+					"path": [
+						"self_made_data",
+						"store"
+					],
+					"query": [
+						{
+							"key": "status",
+							"value": "success",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}
