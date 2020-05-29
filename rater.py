@@ -6,6 +6,9 @@ from flask import request
 import data_wrapper
 import dictionary
 import rabbit_consumer
+import time
+import random
+import datetime
 
 app = Flask("rater")
 
@@ -130,6 +133,47 @@ def rate_via_od(data, word):
     return word_rate
 
 
+def process_user(user_id):
+    tweets = data_wrapper.get_user_tweets(user_id)
+    while not all_tweets_rated(tweets):
+        time.sleep(10)
+        tweets = data_wrapper.get_user_tweets(user_id)
+
+    data_wrapper.drop_user_data(user_id)
+    user_rate = 0
+
+    data = {}
+
+    for t in tweets:
+        if t["date"] in data.keys():
+            data[t["date"]] = float(float(data[t["date"]]) + float(t["emotion"]))
+        else:
+            data[t["date"]] = float(t["emotion"])
+        user_rate += float(t["emotion"])
+
+    for p in data.keys():
+        data_wrapper.insert_user_data(user_id, p, data[p])
+
+    if len(tweets) > 0:
+        user_rate /= len(tweets)
+    data_wrapper.insert_user_rate(user_id, user_rate)
+
+
+def all_tweets_rated(tweets):
+    for t in tweets:
+        if t["emotion"] is None:
+            return False
+    return True
+
+
+def process_tweet(tweet_id):
+    tweet = data_wrapper.get_tweet(tweet_id)
+    if tweet["emotion"] is None:
+        rate, missing_words = rate_string(data_wrapper.get_data(), tweet["tweet_text"], 0, False)
+        tweet["emotion"] = rate
+        data_wrapper.save(tweet)
+
+
 # def main():
 #     data = prepare_data()
 #     test_data = prepare_content()
@@ -175,14 +219,20 @@ def get_self_made_data():
     return data_wrapper.get_self_made_data()
 
 
-
 @app.route("/self_made_data/store", methods=['POST'])
 def store_self_made_data():
     data_wrapper.store_self_made_data(request.json)
     return ""
 
 
+@app.route("/load")
+def load_words_to_db():
+    data_wrapper.load_words_to_db()
+    return ""
+
+
 if __name__ == "__main__":
     dictionary.init()
+    rabbit_consumer.init()
     data_wrapper.get_data()
-    app.run()
+    app.run(port=1488)

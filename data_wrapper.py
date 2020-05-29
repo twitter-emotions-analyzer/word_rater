@@ -15,6 +15,10 @@ def get_data():
     return rate_data
 
 
+def load_words_to_db():
+    psql_wrapper.load_words(get_data())
+
+
 # get dictionary made via OD
 def get_self_made_data():
     global self_made_data
@@ -50,5 +54,22 @@ def get_user_tweets(user_id):
     return psql_wrapper.get_user_tweets(user_id)
 
 
+def get_tweet(tweet_id):
+    return psql_wrapper.get_tweet(tweet_id)
+
+
 def save(tweet):
-    tweet.save()
+    psql_wrapper.save(tweet)
+
+
+def insert_user_data(username, date, rate):
+    psql_wrapper.insert_user_data(username, date, rate)
+
+
+def insert_user_rate(username, rate):
+    psql_wrapper.insert_user_rate(username, rate)
+
+
+def drop_user_data(username):
+    psql_wrapper.drop_user_data(username)
+    psql_wrapper.drop_user_rate(username)
