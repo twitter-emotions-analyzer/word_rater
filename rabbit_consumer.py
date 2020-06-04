@@ -3,6 +3,8 @@ import pika
 import rater
 import threading
 import rabbit_producer
+import datetime
+import time
 
 consumers = []
 
@@ -60,12 +62,13 @@ class Consumer(object):
     def add_on_connection_close_callback(self):
         self._connection.add_on_close_callback(self.on_connection_closed)
 
-    def on_connection_closed(self, connection, reply_code, reply_text):
+    def on_connection_closed(self, connection, reply_code):
         self._channel = None
         if self._closing:
             self._connection.ioloop.stop()
         else:
-            self._connection.add_timeout(5, self.reconnect)
+            time.sleep(5)
+            self.run()
 
     def reconnect(self):
         self._connection.ioloop.stop()
@@ -85,8 +88,9 @@ class Consumer(object):
     def add_on_channel_close_callback(self):
         self._channel.add_on_close_callback(self.on_channel_closed)
 
-    def on_channel_closed(self, channel, reply_code, reply_text):
-        self._connection.close()
+    def on_channel_closed(self, channel, exception):
+        pass
+        # self._connection.close()
 
     def setup_exchange(self, exchange_name):
         self._channel.exchange_declare(callback=self.on_exchange_declareok,
@@ -152,18 +156,28 @@ class Consumer(object):
 
 class TweetsConsumer(Consumer):
     def on_message(self, unused_channel, basic_deliver, properties, body):
-        print("got message %r" % body)
-        data = json.loads(body.decode("utf-8"))
-        rater.process_tweet(data.get("id"))
-        print("processed message %r" % body)
+        print("got tweet message %r %s" % (body, str(datetime.datetime.now())))
+        try:
+            data = json.loads(body.decode("utf-8"))
+            if data.get("id") is not None:
+                rater.process_tweet(data.get("id"))
+            elif data.get("action") == 'end':
+                rabbit_producer.publish(message=body)
+        except Exception:
+            print("got exception")
+        print("processed message %r %s" % (body, str(datetime.datetime.now())))
         self.acknowledge_message(basic_deliver.delivery_tag)
 
 
 class UsersConsumer(Consumer):
     def on_message(self, unused_channel, basic_deliver, properties, body):
-        print("got message %r" % body)
-        data = json.loads(body.decode("utf-8"))
-        rater.process_user(data.get("id"))
-        print("processed message %r" % body)
-        self.acknowledge_message(basic_deliver.delivery_tag)
-        rabbit_producer.publish(message=body)
+        print("got user message %r" % body)
+        if basic_deliver.redelivered:
+            print('broken message, just ack')
+            self.acknowledge_message(basic_deliver.delivery_tag)
+        else:
+            data = json.loads(body.decode("utf-8"))
+            rater.process_user(data.get("username"))
+            print("processed message %r" % body)
+            self.acknowledge_message(basic_deliver.delivery_tag)
+            rabbit_producer.publish(message=body)

@@ -67,7 +67,7 @@ class ExamplePublisher(object):
     def add_on_channel_close_callback(self):
         self._channel.add_on_close_callback(self.on_channel_closed)
 
-    def on_channel_closed(self, channel, reason):
+    def on_channel_closed(self, channel, exception, reason):
         self._channel = None
         if not self._stopping:
             self._connection.close()

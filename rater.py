@@ -1,4 +1,5 @@
 import threading
+from functools import reduce
 
 from flask import Flask
 from flask import request
@@ -7,8 +8,8 @@ import data_wrapper
 import dictionary
 import rabbit_consumer
 import time
-import random
-import datetime
+from multiprocessing import Pool
+
 
 app = Flask("rater")
 
@@ -73,44 +74,62 @@ def split_list(l, sep):
     return tmp
 
 
+def reducer(ch1, ch2):
+    return ch1 + ch2
+
+
 def rate_string(data, string_to_check, d=1, use_od=False):
     rate = 0
-    rate_before = 0
     out = []
     # iterating over all words in provided string
     words = string_split(string_to_check)
-    for l in words:
-        found_words = {}  # dict of words that might be same as one in string
-        for p in data.keys():
-            if are_strings_equal(l, p, d):
-                found_words.update({p: data[p]})
-        if len(found_words) > 0:
-            found = False
+    pool = Pool(8)
+    mapped = pool.map(rate_word, words, 16)
+    reduced = reduce(reducer, mapped)
+    return reduced, None
+    # for l in words:
+    #     print("word:", l)
+    #     word_rate = rate_word(l, d)
+    #     if word_rate == 0.0:  # if nothing has been found this word should be highlighted
+    #         # first - let's check oxford dictionary
+    #         if use_od:  # if it's original string, not the one from OD
+    #             word_rate = data_wrapper.get_data_from_od(l)
+    #             dictionary.store_data(l, word_rate)
+    #         else:
+    #             out.append(l)
+    #     rate += word_rate
+    # # normalizing string's rate
+    # if len(words) > 0:
+    #     rate /= max((len(words) - len(out)), 1)
+    # return rate, out
+
+
+def rate_word(word, d=0):
+    data = data_wrapper.get_data()
+    rate = 0.0
+    found_words = find_appropriate_words(word, data, d)
+    if len(found_words) > 0:
+        found = False
+        for w in found_words.keys():
+            if are_strings_equal(w, word, 0):  # first we need to check if the same word has been found
+                rate += found_words[w]
+                found = True
+                break
+        if not found:  # otherwise let's normalize all found odds
+            tmp_rate = 0
             for w in found_words.keys():
-                if are_strings_equal(w, l, 0):  # first we need to check if the same word has been found
-                    rate += found_words[w]
-                    found = True
-                    break
-            if not found:  # otherwise let's normalize all found odds
-                tmp_rate = 0
-                for w in found_words.keys():
-                    tmp_rate += found_words[w]
-                tmp_rate /= len(found_words)
-                rate += tmp_rate
-        if rate == rate_before:  # if nothing has been found this word should be highlighted
-            # first - let's check oxford dictionary
-            if use_od:  # if it's original string, not the one from OD
-                od_rate = data_wrapper.get_data_from_od(l)
-                rate += od_rate
-                dictionary.store_data(l, rate)
-            else:
-                out.append(l)
-        else:
-            rate_before = rate
-    # normalizing string's rate
-    if len(words) > 0:
-        rate /= max((len(words) - len(out)), 1)
-    return rate, out
+                tmp_rate += found_words[w]
+            tmp_rate /= len(found_words)
+            rate += tmp_rate
+    return rate
+
+
+def find_appropriate_words(word, data, d):
+    found_words = {}  # dict of words that might be same as one in string
+    for p in data.keys():
+        if are_strings_equal(word, p, d):
+            found_words.update({p: data[p]})
+    return found_words
 
 
 def rate_via_od(data, word):
