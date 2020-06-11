@@ -86,6 +86,7 @@ def rate_string(data, string_to_check, d=1, use_od=False):
     pool = Pool(8)
     mapped = pool.map(rate_word, words, 16)
     reduced = reduce(reducer, mapped)
+    pool.close()
     return reduced, None
     # for l in words:
     #     print("word:", l)
@@ -164,14 +165,23 @@ def process_user(user_id):
     data = {}
 
     for t in tweets:
-        if t["date"] in data.keys():
-            data[t["date"]] = float(float(data[t["date"]]) + float(t["emotion"]))
+        date_tmp = t["date"]
+        if date_tmp in data.keys():
+            rate, count = data[date_tmp]
+            rate += float(t["emotion"])
+            count += 1
+            data[date_tmp] = (rate, count)
         else:
-            data[t["date"]] = float(t["emotion"])
+            data[date_tmp] = (float(t["emotion"]), 1)
         user_rate += float(t["emotion"])
 
     for p in data.keys():
-        data_wrapper.insert_user_data(user_id, p, data[p])
+        rate, count = data[p]
+        if count < 0:
+            rate /= count
+        else:
+            rate = 0
+        data_wrapper.insert_user_data(user_id, p, rate)
 
     if len(tweets) > 0:
         user_rate /= len(tweets)

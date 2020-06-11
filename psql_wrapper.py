@@ -47,7 +47,12 @@ def insert_user_rate(username, rate):
     conn.commit()
     cursor.close()
     conn.close()
-
+    conn = connection()
+    cursor = conn.cursor()
+    cursor.execute('INSERT INTO tmp_user_rate (username, rate) VALUES (%s, %s);', (username, rate))
+    conn.commit()
+    cursor.close()
+    conn.close()
 
 def save(tweet):
     conn = connection()
@@ -73,6 +78,12 @@ def drop_user_rate(username):
     conn = connection()
     cursor = conn.cursor()
     cursor.execute('delete from user_rate where username = %s;', [username])
+    conn.commit()
+    cursor.close()
+    conn.close()
+    conn = connection()
+    cursor = conn.cursor()
+    cursor.execute('delete from tmp_user_rate where username = %s;', [username])
     conn.commit()
     cursor.close()
     conn.close()

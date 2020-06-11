@@ -7,7 +7,7 @@ publisher = None
 
 def publish(message):
 
-    connection = pika.BlockingConnection(pika.ConnectionParameters(host='localhost'))
+    connection = pika.BlockingConnection(pika.ConnectionParameters(host='localhost', credentials='rater:123456'))
     channel = connection.channel()
     channel.basic_publish('rater.out',
                           'rater.out',

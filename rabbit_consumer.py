@@ -163,8 +163,8 @@ class TweetsConsumer(Consumer):
                 rater.process_tweet(data.get("id"))
             elif data.get("action") == 'end':
                 rabbit_producer.publish(message=body)
-        except Exception:
-            print("got exception")
+        except Exception as e:
+            print("got exception {}", e)
         print("processed message %r %s" % (body, str(datetime.datetime.now())))
         self.acknowledge_message(basic_deliver.delivery_tag)
 
@@ -172,12 +172,15 @@ class TweetsConsumer(Consumer):
 class UsersConsumer(Consumer):
     def on_message(self, unused_channel, basic_deliver, properties, body):
         print("got user message %r" % body)
-        if basic_deliver.redelivered:
-            print('broken message, just ack')
-            self.acknowledge_message(basic_deliver.delivery_tag)
-        else:
-            data = json.loads(body.decode("utf-8"))
-            rater.process_user(data.get("username"))
-            print("processed message %r" % body)
-            self.acknowledge_message(basic_deliver.delivery_tag)
-            rabbit_producer.publish(message=body)
+        try:
+            if basic_deliver.redelivered:
+                print('broken message, just ack')
+                self.acknowledge_message(basic_deliver.delivery_tag)
+            else:
+                data = json.loads(body.decode("utf-8"))
+                rater.process_user(data.get("username"))
+                print("processed message %r" % body)
+                self.acknowledge_message(basic_deliver.delivery_tag)
+                rabbit_producer.publish(message=body)
+        except Exception as e:
+            print("got exception {}", e)
