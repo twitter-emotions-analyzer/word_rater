@@ -1,5 +1,8 @@
 import threading
+import time
 from functools import reduce
+from multiprocessing import Pool
+import json
 
 from flask import Flask
 from flask import request
@@ -7,9 +10,6 @@ from flask import request
 import data_wrapper
 import dictionary
 import rabbit_consumer
-import time
-from multiprocessing import Pool
-
 
 app = Flask("rater")
 
@@ -86,6 +86,8 @@ def rate_string(data, string_to_check, d=1, use_od=False):
     pool = Pool(8)
     mapped = pool.map(rate_word, words, 16)
     reduced = reduce(reducer, mapped)
+    if len(words) > 0:
+        reduced /= len(words)
     pool.close()
     return reduced, None
     # for l in words:
@@ -175,17 +177,18 @@ def process_user(user_id):
             data[date_tmp] = (float(t["emotion"]), 1)
         user_rate += float(t["emotion"])
 
+    rates = []
     for p in data.keys():
         rate, count = data[p]
+        rates.append(rate)
         if count < 0:
             rate /= count
         else:
             rate = 0
         data_wrapper.insert_user_data(user_id, p, rate)
-
     if len(tweets) > 0:
-        user_rate /= len(tweets)
-    data_wrapper.insert_user_rate(user_id, user_rate)
+        user_rate = data_wrapper.get_neural_rate(rates).json()
+        data_wrapper.insert_user_rate(user_id, user_rate)
 
 
 def all_tweets_rated(tweets):
@@ -201,6 +204,54 @@ def process_tweet(tweet_id):
         rate, missing_words = rate_string(data_wrapper.get_data(), tweet["tweet_text"], 0, False)
         tweet["emotion"] = rate
         data_wrapper.save(tweet)
+
+
+def calc_words():
+    tweets = data_wrapper.get_all_tweets()
+    users = {}
+    for tweet in tweets:
+        if tweet["username"] not in users.keys():
+            users[tweet["username"]] = 1
+        else:
+            users[tweet["username"]] = users[tweet["username"]] + 1
+    users_rates = data_wrapper.get_users_rates(users)
+    clust1 = []
+    clust2 = []
+    clust3 = []
+    clust4 = []
+    for k in users.keys():
+        count = users[k]
+        rate = users_rates[k]
+        if int(count) <= 3 and float(rate) >= float(0):
+            clust1.append(k)
+        elif int(count) > 3 and float(rate) >= float(0):
+            clust2.append(k)
+        elif int(count) <= 3 and float(rate) < float(0):
+            clust3.append(k)
+        else:
+            clust4.append(k)
+    data = json.dumps({"1": calc_word_for_users(tweets, clust1), "2": calc_word_for_users(tweets, clust2),
+                      "3": calc_word_for_users(tweets, clust3), "4": calc_word_for_users(tweets, clust4)})
+    return data
+
+
+def calc_word_for_users(tweets, usernames):
+    words = {}
+    for tweet in tweets:
+        if tweet["username"] in usernames:
+            tweet_words = string_split(tweet["tweet_text"])
+            for word in tweet_words:
+                if word in words.keys():
+                    words[word] = words[word] + 1
+                else:
+                    words[word] = 1
+    max_count = 0
+    word = ''
+    for w in words.keys():
+        if words[w] >= max_count:
+            max_count = words[w]
+            word = w
+    return word
 
 
 # def main():

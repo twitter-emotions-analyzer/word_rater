@@ -5,12 +5,12 @@ import json
 publisher = None
 
 
-def publish(message):
+def publish(message, exchange='rater.out', key='rater.out'):
 
-    connection = pika.BlockingConnection(pika.ConnectionParameters(host='localhost', credentials='rater:123456'))
+    connection = pika.BlockingConnection(pika.ConnectionParameters(host='localhost'))
     channel = connection.channel()
-    channel.basic_publish('rater.out',
-                          'rater.out',
+    channel.basic_publish(exchange,
+                          key,
                           message,
                           pika.BasicProperties(content_type='application/json',
                                                delivery_mode=1))

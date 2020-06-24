@@ -1,6 +1,7 @@
 import json
 import psql_wrapper
 import rater
+import requests
 
 rate_data = {}
 self_made_data = {}
@@ -58,8 +59,25 @@ def get_tweet(tweet_id):
     return psql_wrapper.get_tweet(tweet_id)
 
 
+def get_all_tweets():
+    return psql_wrapper.get_all_tweets()
+
+
+def get_users_rates(users):
+    rates = psql_wrapper.get_users_rates(users)
+    result = {}
+    for r in rates:
+        if r["username"] not in result.keys():
+            result[r["username"]] = r["rate"]
+    return result
+
+
 def save(tweet):
     psql_wrapper.save(tweet)
+
+
+def get_neural_rate(rates):
+    return requests.post(url="http://localhost:1489/calc", json=json.dumps({"data": rates}))
 
 
 def insert_user_data(username, date, rate):

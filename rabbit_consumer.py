@@ -1,31 +1,23 @@
-import json
-import pika
-import rater
-import threading
-import rabbit_producer
 import datetime
+import json
+import threading
 import time
+
+import pika
+
+import rabbit_producer
+import rater
 
 consumers = []
 
 
 def init():
-    # print("init rabbit")
-    # connection = pika.BlockingConnection(
-    #     pika.ConnectionParameters(host='localhost'))
-    # channel = connection.channel()
-    # channel.exchange_declare(exchange='rater', exchange_type='topic', durable=True)
-    #
-    # channel.queue_bind(exchange='rater', queue="rater")
-    #
-    # channel.basic_consume(
-    #     queue="tweets", on_message_callback=callback, auto_ack=True)
-    #
-    # channel.start_consuming()
     tweets_consumer = TweetsConsumer('amqp://guest:guest@localhost:5672/%2F', 'rater', 'tweets', 'tweets')
     tweets_consumer.run()
     users_consumer = UsersConsumer('amqp://guest:guest@localhost:5672/%2F', 'rater', 'users', 'user')
     users_consumer.run()
+    word_consumer = WordConsumer('amqp://guest:guest@localhost:5672/%2F', 'rater', 'word', 'user')
+    word_consumer.run()
 
 
 def callback(ch, method, properties, body):
@@ -182,5 +174,21 @@ class UsersConsumer(Consumer):
                 print("processed message %r" % body)
                 self.acknowledge_message(basic_deliver.delivery_tag)
                 rabbit_producer.publish(message=body)
+        except Exception as e:
+            print("got exception {}", e)
+
+
+class WordConsumer(Consumer):
+    def on_message(self, unused_channel, basic_deliver, properties, body):
+        print("got word message %r" % body)
+        try:
+            if basic_deliver.redelivered:
+                print('broken message, just ack')
+                self.acknowledge_message(basic_deliver.delivery_tag)
+            else:
+                data = rater.calc_words()
+                print("processed message %r" % body)
+                self.acknowledge_message(basic_deliver.delivery_tag)
+                rabbit_producer.publish(message=data, exchange='rater.out', key='user.word')
         except Exception as e:
             print("got exception {}", e)

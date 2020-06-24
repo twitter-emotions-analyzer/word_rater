@@ -3,7 +3,7 @@ import psycopg2
 
 def connection():
     conn = psycopg2.connect(dbname='gakachu', user='gakachu',
-                            password='123123123', host='18.191.230.61')
+                            password='123123123', host='18.222.72.126')
     return conn
 
 
@@ -14,6 +14,26 @@ def get_cursor():
 def get_user_tweets(user_id):
     cursor = get_cursor()
     cursor.execute('select * from tweets where username = %s', [str(user_id)])
+    results = []
+    columns = [column[0] for column in cursor.description]
+    for row in cursor.fetchall():
+        results.append(dict(zip(columns, row)))
+    return results
+
+
+def get_all_tweets():
+    cursor = get_cursor()
+    cursor.execute('select * from tweets')
+    results = []
+    columns = [column[0] for column in cursor.description]
+    for row in cursor.fetchall():
+        results.append(dict(zip(columns, row)))
+    return results
+
+
+def get_users_rates(users):
+    cursor = get_cursor()
+    cursor.execute('select * from user_rate where username IN %(users)s', {'users': tuple(users)})
     results = []
     columns = [column[0] for column in cursor.description]
     for row in cursor.fetchall():
@@ -53,6 +73,7 @@ def insert_user_rate(username, rate):
     conn.commit()
     cursor.close()
     conn.close()
+
 
 def save(tweet):
     conn = connection()
